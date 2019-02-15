@@ -84,34 +84,7 @@ void draw()
 
 void mousePressed() // test to see if hit was in target!
 {
-  if (trialNum >= trials.size()) //if task is over, just return
-    return;
-
-  if (trialNum == 0) //check if first click, if so, start timer
-    startTime = millis();
-
-  if (trialNum == trials.size() - 1) //check if final click
-  {
-    finishTime = millis();
-    //write to terminal some output. Useful for debugging too.
-    println("we're done!");
-  }
-
-  Rectangle bounds = getButtonLocation(trials.get(trialNum));
-
- //check to see if mouse cursor is inside button 
-  if ((mouseX > bounds.x && mouseX < bounds.x + bounds.width) && (mouseY > bounds.y && mouseY < bounds.y + bounds.height)) // test to see if hit was within bounds
-  {
-    System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
-    hits++; 
-  } 
-  else
-  {
-    System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
-    misses++;
-  }
-
-  trialNum++; //Increment trial number
+  pressBox();
 
   //in this example code, we move the mouse back to the middle
   //robot.mouseMove(width/2, (height)/2); //on click, move cursor to roughly center of window!
@@ -156,27 +129,65 @@ void keyPressed()
   //https://processing.org/reference/keyTyped_.html
   //https://processing.org/reference/keyCode.html
   
-  if (int(key) == 119) {
-    robot.mouseMove(width/2, (height)/4);
-    mouseX = width/2;
-    mouseY = height/4;
+  //if (int(key) == 119) {
+  //  robot.mouseMove(width/2, (height)/4);
+  //  mouseX = width/2;
+  //  mouseY = height/4;
+  //}
+  
+  //if (int(key) == 97) {
+  //  robot.mouseMove(width/4, (height)/2);
+  //  mouseX = width/4;
+  //  mouseY = height/2;
+  //}
+  
+  //if (int(key) == 115) {
+  //  robot.mouseMove(width/2, (3 * height)/4);
+  //  mouseX = width/2;
+  //  mouseY = (3 * height)/4;
+  //}
+  
+  //if (int(key) == 100) {
+  //  robot.mouseMove((3 * width)/4, (height)/2);
+  //  mouseX = (3 * width)/4;
+  //  mouseY = height/2;
+  //}
+  
+  
+  if (keyCode == SHIFT) {  
+    pressBox();
   }
   
-  if (int(key) == 97) {
-    robot.mouseMove(width/4, (height)/2);
-    mouseX = width/4;
-    mouseY = height/2;
-  }
   
-  if (int(key) == 115) {
-    robot.mouseMove(width/2, (3 * height)/4);
-    mouseX = width/2;
-    mouseY = (3 * height)/4;
-  }
+}
+
+void pressBox() {
+  if (trialNum >= trials.size()) //if task is over, just return
+      return;
   
-  if (int(key) == 100) {
-    robot.mouseMove((3 * width)/4, (height)/2);
-    mouseX = (3 * width)/4;
-    mouseY = height/2;
-  }
+    if (trialNum == 0) //check if first click, if so, start timer
+      startTime = millis();
+  
+    if (trialNum == trials.size() - 1) //check if final click
+    {
+      finishTime = millis();
+      //write to terminal some output. Useful for debugging too.
+      println("we're done!");
+    }
+  
+    Rectangle bounds = getButtonLocation(trials.get(trialNum));
+  
+   //check to see if mouse cursor is inside button 
+    if ((mouseX > bounds.x && mouseX < bounds.x + bounds.width) && (mouseY > bounds.y && mouseY < bounds.y + bounds.height)) // test to see if hit was within bounds
+    {
+      System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
+      hits++; 
+    } 
+    else
+    {
+      System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
+      misses++;
+    }
+  
+    trialNum++; //Increment trial number
 }
