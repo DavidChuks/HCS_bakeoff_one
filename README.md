@@ -1,2 +1,4 @@
 # HCS_bakeoff_one
-I have provided source code for a simple application that displays a 4x4 grid of square buttons. These light up one at a time. Users must click the lit buttons as accurately and quickly as they can.  I've provided a basic example design (not necessarily good!) in the scaffold (a red dot).  You mission is to devise a technique that facilitates clicking these buttons (every button must be equally clickable at any instant). Time is the important measure (though a time penalty will be assigned at the bakeoff for performances under 95%).  
+The class provided source code for a simple application that displays a 4x4 grid of square buttons. These light up one at a time. Users must click the lit buttons as accurately and quickly as they can.  
+
+The mission is to devise a technique that facilitates clicking these buttons (every button must be equally clickable at any instant). Time is the important measure!
