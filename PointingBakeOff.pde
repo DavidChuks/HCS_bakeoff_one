@@ -21,7 +21,7 @@ color gray = color(128,128,128);
 color red = color(255,0,0);
 color green = color(0,255,0);
 color mouseC = gray;
-Robot robot; //initalized in setup 
+Robot robot; //initalized in setup
 
 int numRepeats = 1; //sets the number of times each button repeats in the test
 
@@ -38,7 +38,7 @@ void setup()
 
   try {
     robot = new Robot(); //create a "Java Robot" class that can move the system cursor
-  } 
+  }
   catch (AWTException e) {
     e.printStackTrace();
   }
@@ -52,7 +52,7 @@ void setup()
 
   Collections.shuffle(trials); // randomize the order of the buttons
   System.out.println("trial order: " + trials);
-  
+
   frame.setLocation(0,0); // put window in top left corner of screen (doesn't always work)
 }
 
@@ -67,7 +67,7 @@ void draw()
     float penalty = constrain(((95f-((float)hits*100f/(float)(hits+misses)))*.2f),0,100);
     fill(255); //set fill color to white
     //write to screen (not console)
-    text("Finished!", width / 2, height / 2); 
+    text("Finished!", width / 2, height / 2);
     text("Hits: " + hits, width / 2, height / 2 + 20);
     text("Misses: " + misses, width / 2, height / 2 + 40);
     text("Accuracy: " + (float)hits*100f/(float)(hits+misses) +"%", width / 2, height / 2 + 60);
@@ -89,39 +89,8 @@ void draw()
 
 void mousePressed() // test to see if hit was in target!
 {
-  if (trialNum >= trials.size()) //if task is over, just return
-    return;
-
-  if (trialNum == 0) //check if first click, if so, start timer
-    startTime = millis();
-
-  if (trialNum == trials.size() - 1) //check if final click
-  {
-    finishTime = millis();
-    //write to terminal some output. Useful for debugging too.
-    println("we're done!");
-  }
-
-  Rectangle bounds = getButtonLocation(trials.get(trialNum));
-  
-  //check to see if mouse cursor is inside button 
-  if (mouseX + mouseR > bounds.x && mouseY + mouseR > bounds.y &&
-      mouseX - mouseR < bounds.x + bounds.width && mouseY - mouseR < bounds.y + bounds.height) // test to see if hit was within bounds
-  {
-    System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
-    hits++; 
-  } 
-  else
-  {
-    System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
-    misses++;
-  }
-
-  trialNum++; //Increment trial number
-
-  //in this example code, we move the mouse back to the middle
-  //robot.mouseMove(width/2, (height)/2); //on click, move cursor to roughly center of window!
-}  
+  pressBox();
+}
 
 //probably shouldn't have to edit this method
 Rectangle getButtonLocation(int i) //for a given button ID, what is its location and size
@@ -150,12 +119,12 @@ void mouseMoved()
    //can do stuff everytime the mouse is moved (i.e., not clicked)
    //https://processing.org/reference/mouseMoved_.html
    Rectangle bounds = getButtonLocation(trials.get(trialNum));
-   //check to see if mouse cursor is inside button 
+   //check to see if mouse cursor is inside button
   if (mouseX + mouseR > bounds.x && mouseY + mouseR > bounds.y &&
       mouseX - mouseR < bounds.x + bounds.width && mouseY - mouseR < bounds.y + bounds.height) // test to see if hit was within bounds
   {
     mouseC = green;
-  } 
+  }
   else {
     mouseC = gray;
   }
@@ -167,9 +136,43 @@ void mouseDragged()
   //https://processing.org/reference/mouseDragged_.html
 }
 
-void keyPressed() 
+void keyPressed()
 {
   //can use the keyboard if you wish
   //https://processing.org/reference/keyTyped_.html
   //https://processing.org/reference/keyCode.html
+  if (keyCode == SHIFT) {
+    pressBox();
+  }
+}
+
+void pressBox() {
+  if (trialNum >= trials.size()) //if task is over, just return
+      return;
+
+    if (trialNum == 0) //check if first click, if so, start timer
+      startTime = millis();
+
+    if (trialNum == trials.size() - 1) //check if final click
+    {
+      finishTime = millis();
+      //write to terminal some output. Useful for debugging too.
+      println("we're done!");
+    }
+
+    Rectangle bounds = getButtonLocation(trials.get(trialNum));
+
+   //check to see if mouse cursor is inside button
+    if ((mouseX > bounds.x && mouseX < bounds.x + bounds.width) && (mouseY > bounds.y && mouseY < bounds.y + bounds.height)) // test to see if hit was within bounds
+    {
+      System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
+      hits++;
+    }
+    else
+    {
+      System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
+      misses++;
+    }
+
+    trialNum++; //Increment trial number
 }
