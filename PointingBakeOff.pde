@@ -19,6 +19,7 @@ int misses = 0; //number of missed clicks
 int mouseR = 22; // Radius of red dot on cursor
 color gray = color(128,128,128);
 color red = color(255,0,0);
+color green = color(0,255,0);
 color mouseC = gray;
 Robot robot; //initalized in setup 
 
@@ -136,7 +137,7 @@ void drawButton(int i)
   Rectangle bounds = getButtonLocation(i);
 
   if (trials.get(trialNum) == i) // see if current button is the target
-    fill(0, 255, 255); // if so, fill cyan
+    fill(255,165,0); // if so, fill orange
   else
     fill(200); // if not, fill gray
 
@@ -153,7 +154,7 @@ void mouseMoved()
   if (mouseX + mouseR > bounds.x && mouseY + mouseR > bounds.y &&
       mouseX - mouseR < bounds.x + bounds.width && mouseY - mouseR < bounds.y + bounds.height) // test to see if hit was within bounds
   {
-    mouseC = red;
+    mouseC = green;
   } 
   else {
     mouseC = gray;
