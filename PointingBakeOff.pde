@@ -115,7 +115,7 @@ void drawButton(int i)
 
 void mouseMoved()
 {
-   if (trialNum >= trials.size() - 1) return;
+   if (trialNum >= trials.size()) return;
    //can do stuff everytime the mouse is moved (i.e., not clicked)
    //https://processing.org/reference/mouseMoved_.html
    Rectangle bounds = getButtonLocation(trials.get(trialNum));
