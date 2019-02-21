@@ -176,4 +176,5 @@ void pressBox() {
     }
 
     trialNum++; //Increment trial number
+    mouseMoved();
 }
