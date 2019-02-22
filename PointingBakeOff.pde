@@ -97,6 +97,7 @@ Rectangle getButtonLocation(int i) //for a given button ID, what is its location
 {
    int x = (i % 4) * (padding + buttonSize) + margin;
    int y = (i / 4) * (padding + buttonSize) + margin;
+   
    return new Rectangle(x, y, buttonSize, buttonSize);
 }
 
@@ -128,6 +129,22 @@ void mouseMoved()
   else {
     mouseC = gray;
   }
+  
+  int row = findCurrentRow();
+  System.out.println(row);
+}
+
+int findCurrentRow()
+{
+  int rowHeight = padding/2;
+  
+  for (int i = 0; i < 4; i++) {
+    int y = i * (padding + buttonSize) + margin;
+    if (mouseY >= y-rowHeight && mouseY < y+buttonSize+rowHeight) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 void mouseDragged()
