@@ -16,11 +16,11 @@ int startTime = 0; // time starts when the first click is captured
 int finishTime = 0; //records the time of the final click
 int hits = 0; //number of successful clicks
 int misses = 0; //number of missed clicks
-int mouseR = 22; // Radius of red dot on cursor
+int mouseR = 15; // Radius of red dot on cursor
 color gray = color(128,128,128);
 color red = color(255,0,0);
 color green = color(0,255,0);
-color mouseC = gray;
+color mouseC = red;
 int inc = 1;
 Robot robot; //initalized in setup
 int row = 0;
@@ -147,14 +147,14 @@ void mouseMoved()
    //https://processing.org/reference/mouseMoved_.html
    Rectangle bounds = getButtonLocation(trials.get(trialNum));
    //check to see if mouse cursor is inside button
-  if (mouseX + mouseR > bounds.x && mouseY + mouseR > bounds.y &&
-      mouseX - mouseR < bounds.x + bounds.width && mouseY - mouseR < bounds.y + bounds.height) // test to see if hit was within bounds
-  {
-    mouseC = green;
-  }
-  else {
-    mouseC = gray;
-  }
+  //if (mouseX + mouseR > bounds.x && mouseY + mouseR > bounds.y &&
+  //    mouseX - mouseR < bounds.x + bounds.width && mouseY - mouseR < bounds.y + bounds.height) // test to see if hit was within bounds
+  //{
+  //  mouseC = green;
+  //}
+  //else {
+  //  mouseC = gray;
+  //}
   
   currentRow = findCurrentRow();
 }
