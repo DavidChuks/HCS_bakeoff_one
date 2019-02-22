@@ -155,15 +155,15 @@ void mouseDragged()
 
 void keyPressed()
 {
-  int numCode = 48;
+  int numCode = keyCode-48;
   //can use the keyboard if you wish
   //https://processing.org/reference/keyTyped_.html
   //https://processing.org/reference/keyCode.html
   if (keyCode == SHIFT) {
     pressBox(-1);
   }
-  else if (currentRow >= 0 && (keyCode >= numCode+1 && keyCode <= numCode+4)) {
-    pressBox(keyCode-numCode-1);
+  else if (currentRow >= 0 && (numCode >= 1 && numCode <= 4)) {
+    pressBox(numCode-1);
   }
 }
 
@@ -196,6 +196,7 @@ void pressBox(int keyColumn) {
      }
    }
    
+   // If it was a mouse click or SHIFT press
    else {
      
      //check to see if mouse cursor is inside button
