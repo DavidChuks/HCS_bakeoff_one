@@ -23,6 +23,7 @@ color green = color(0,255,0);
 color mouseC = gray;
 int inc = 1;
 Robot robot; //initalized in setup
+int row = 0;
 
 int numRepeats = 1; //sets the number of times each button repeats in the test
 
@@ -110,15 +111,26 @@ void drawButton(int i)
 
   if (trials.get(trialNum) == i) // see if current button is the target
   {
-
-    fill(255,165,0); // if so, fill orange
+    //if i is between 0 and 4
+    if (i >= row*4 && i < row*4+4)
+    fill(255,165,0);
+    else
+    fill(0);
     text(inc++ , bounds.x + bounds.width/2, bounds.y-5 );
+    
+    fill(255,165,0); // if so, fill orange
     rect(bounds.x, bounds.y, bounds.width, bounds.height); //draw button
   }
   else
   {
+    //if i is between 0 and 4
+    if (i >= row*4 && i < row*4+4)
+    fill(200);
+    else
     fill(0);
+    
     text(inc++ , bounds.x + bounds.width/2, bounds.y-5 );
+    
     fill(200); // if not, fill gray
     rect(bounds.x, bounds.y, bounds.width, bounds.height); //draw button
   }
@@ -141,6 +153,9 @@ void mouseMoved()
   else {
     mouseC = gray;
   }
+  
+ row = findCurrentRow();
+  System.out.println(row);
 }
 
 void mouseDragged()
@@ -190,4 +205,17 @@ void pressBox() {
 
     trialNum++; //Increment trial number
     mouseMoved();
+}
+
+int findCurrentRow()
+{
+  int rowHeight = padding/2;
+  
+  for (int i = 0; i < 4; i++) {
+    int y = i * (padding + buttonSize) + margin;
+    if (mouseY >= y-rowHeight && mouseY < y+buttonSize+rowHeight) {
+      return i;
+    }
+  }
+  return -1;
 }
