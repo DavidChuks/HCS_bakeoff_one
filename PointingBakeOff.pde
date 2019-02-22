@@ -22,6 +22,7 @@ color red = color(255,0,0);
 color green = color(0,255,0);
 color mouseC = gray;
 Robot robot; //initalized in setup
+int currentRow = -1;
 
 int numRepeats = 1; //sets the number of times each button repeats in the test
 
@@ -89,7 +90,7 @@ void draw()
 
 void mousePressed() // test to see if hit was in target!
 {
-  pressBox();
+  pressBox(-1);
 }
 
 //probably shouldn't have to edit this method
@@ -130,8 +131,7 @@ void mouseMoved()
     mouseC = gray;
   }
   
-  int row = findCurrentRow();
-  System.out.println(row);
+  currentRow = findCurrentRow();
 }
 
 int findCurrentRow()
@@ -155,15 +155,19 @@ void mouseDragged()
 
 void keyPressed()
 {
+  int numCode = 48;
   //can use the keyboard if you wish
   //https://processing.org/reference/keyTyped_.html
   //https://processing.org/reference/keyCode.html
   if (keyCode == SHIFT) {
-    pressBox();
+    pressBox(-1);
+  }
+  else if (currentRow >= 0 && (keyCode >= numCode+1 && keyCode <= numCode+4)) {
+    pressBox(keyCode-numCode-1);
   }
 }
 
-void pressBox() {
+void pressBox(int keyColumn) {
   if (trialNum >= trials.size()) //if task is over, just return
       return;
 
@@ -179,19 +183,34 @@ void pressBox() {
 
     Rectangle bounds = getButtonLocation(trials.get(trialNum));
 
-   //check to see if mouse cursor is inside button
-   if (mouseX + mouseR > bounds.x && mouseY + mouseR > bounds.y &&
-      mouseX - mouseR < bounds.x + bounds.width && mouseY - mouseR < bounds.y + bounds.height) // test to see if hit was within bounds
-    {
-      System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
-      hits++;
-    }
-    else
-    {
-      System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
-      misses++;
-    }
-
-    trialNum++; //Increment trial number
-    mouseMoved();
+   // If key input for column is specified.
+   if (keyColumn >= 0) {
+     int clickedBox = currentRow * 4 + keyColumn;
+     if (trials.get(trialNum) == clickedBox) {
+       System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
+       hits++;
+     }
+     else {
+       System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
+        misses++;
+     }
+   }
+   
+   else {
+     
+     //check to see if mouse cursor is inside button
+     if (mouseX + mouseR > bounds.x && mouseY + mouseR > bounds.y &&
+        mouseX - mouseR < bounds.x + bounds.width && mouseY - mouseR < bounds.y + bounds.height) // test to see if hit was within bounds
+      {
+        System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
+        hits++;
+      }
+      else
+      {
+        System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
+        misses++;
+      }
+   }
+   trialNum++; //Increment trial number
+   mouseMoved();
 }
