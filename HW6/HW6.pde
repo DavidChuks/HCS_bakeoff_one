@@ -178,8 +178,6 @@ void pressBox() {
     
     destX = bounds.x + (bounds.width / 2);
     destY = bounds.y + (bounds.height / 2);
-    
-    float distance = dist(initX, initY, destX, destY);
    
 
    //check to see if mouse cursor is inside button
@@ -197,7 +195,7 @@ void pressBox() {
     
     
     println(trialNum + "," + partId + "," + initX + ","  + initY + "," + destX + "," + destY + "," + 
-            distance + "," + buttonSize + "," + timeTake + "," + hit);
+            buttonSize + "," + timeTake + "," + hit);
 
     trialNum++; //Increment trial number
     
